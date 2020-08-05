@@ -1,0 +1,39 @@
+namespace 字符串解码
+{
+    class Suit {
+    public:
+        int times;
+        string str;
+        Suit(int a, string b)
+        {
+            times = a; str = b;
+        }
+    };
+    string test(string source)//太晚了认为数字为0-9 文字abc
+    {
+        stack<Suit>mystack;
+        for (int a = 0; a < source.size(); a++)
+        {
+            if (source.at(a) >= '0' && source.at(a) <= '9')
+                mystack.push(Suit(source.at(a), ""));
+            else if (source.at(a) != '[' && source.at(a) != ']')
+            {
+                mystack.top().str.push_back(source.at(a));
+            }
+            else if (source.at(a) != ']')
+            {
+                auto temp = mystack.top(); mystack.pop();
+
+
+                string tempstr;
+                for (int a = 0; a < temp.times; a++)
+                {
+                    tempstr += temp.str;
+                }
+                if (mystack.size() == 0)return  tempstr;
+                mystack.top().str += tempstr;
+            }
+        }
+    }
+
+}
